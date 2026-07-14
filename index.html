@@ -1012,28 +1012,35 @@
     .carousel-arrow.prev { left: 12px; }
     .carousel-arrow.next { right: 12px; }
 
+    /* Dots debajo del carrusel, en flujo normal */
     .carousel-dots {
-      position: absolute;
-      bottom: 14px; left: 50%;
-      transform: translateX(-50%);
       display: flex;
-      gap: 8px;
+      gap: 8px 10px;
       align-items: center;
       flex-wrap: wrap;
       justify-content: center;
+      margin-top: 16px;
+      padding: 0 4px;
     }
     .cdot {
-      width: 7px; height: 7px;
+      width: 8px; height: 8px;
       border-radius: 50%;
-      background: rgba(255,255,255,0.3);
+      background: rgba(255,255,255,0.28);
+      border: none;
       cursor: pointer;
       transition: background .3s, transform .3s;
       display: inline-block;
+      flex-shrink: 0;
     }
-    .cdot:hover { transform: scale(1.4); }
-    .cdot.active { background: var(--gold, #c9a227); }
-    .cdot-label { color: rgba(255,255,255,0.45); font-size: 0.7rem; }
-    .cdot-sep   { color: rgba(255,255,255,0.2);  font-size: 0.8rem; }
+    .cdot:hover { transform: scale(1.4); background: rgba(255,255,255,0.55); }
+    .cdot.active { background: var(--gold, #c9a227); transform: scale(1.25); }
+    .cdot-label {
+      color: rgba(255,255,255,0.5);
+      font-size: 0.72rem;
+      letter-spacing: 0.02em;
+      white-space: nowrap;
+    }
+    .cdot-sep { color: rgba(255,255,255,0.18); font-size: 0.8rem; }
 
     .collage-wrap { margin-top: 3rem; }
     #collage { columns: 4; gap: 8px; }
@@ -1095,6 +1102,25 @@
       .galeria-section { padding: 32px 16px 0; }
       .carousel-fg { height: 280px; }
       #collage { columns: 2; }
+
+      /* Los dots se envuelven en varias filas sin apretujarse */
+      .carousel-dots {
+        gap: 7px 8px;
+        margin-top: 14px;
+      }
+      .cdot { width: 9px; height: 9px; }   /* más grandes: se tocan con el dedo */
+      .cdot-label { font-size: 0.68rem; }
+      .cdot-sep { display: none; }          /* las etiquetas ya separan los grupos */
+    }
+
+    @media (max-width: 480px) {
+      .carousel-fg { height: 220px; }
+      .cdot-label {
+        font-size: 0.65rem;
+        flex-basis: 100%;                   /* cada grupo arranca en su propia fila */
+        text-align: center;
+        margin-top: 4px;
+      }
     }
 
     /* ══════════════════════════════════════════════════════════
@@ -1862,42 +1888,43 @@
     <!-- Flechas -->
     <button class="carousel-arrow prev" onclick="moveCarousel(-1)" aria-label="Anterior">‹</button>
     <button class="carousel-arrow next" onclick="moveCarousel(1)" aria-label="Siguiente">›</button>
-
-    <!-- Dots agrupados por edición -->
-    <div class="carousel-dots">
-      <span class="cdot-label">Bienvenida</span>
-      <span class="cdot active" onclick="goToSlide(0)"></span>
-      <span class="cdot" onclick="goToSlide(1)"></span>
-      <span class="cdot" onclick="goToSlide(2)"></span>
-      <span class="cdot" onclick="goToSlide(3)"></span>
-      <span class="cdot" onclick="goToSlide(4)"></span>
-      <span class="cdot" onclick="goToSlide(5)"></span>
-      <span class="cdot-sep">|</span>
-      <span class="cdot-label">Oncología</span>
-      <span class="cdot" onclick="goToSlide(6)"></span>
-      <span class="cdot" onclick="goToSlide(7)"></span>
-      <span class="cdot" onclick="goToSlide(8)"></span>
-      <span class="cdot" onclick="goToSlide(9)"></span>
-      <span class="cdot-sep">|</span>
-      <span class="cdot-label">Epidemiología</span>
-      <span class="cdot" onclick="goToSlide(10)"></span>
-      <span class="cdot" onclick="goToSlide(11)"></span>
-      <span class="cdot" onclick="goToSlide(12)"></span>
-      <span class="cdot-sep">|</span>
-      <span class="cdot-label">Biotecnología</span>
-      <span class="cdot" onclick="goToSlide(13)"></span>
-      <span class="cdot" onclick="goToSlide(14)"></span>
-      <span class="cdot" onclick="goToSlide(15)"></span>
-            <span class="cdot-sep">|</span>
-      <span class="cdot-label">Cierre</span>
-      <span class="cdot" onclick="goToSlide(16)"></span>
-      <span class="cdot" onclick="goToSlide(17)"></span>
-      <span class="cdot" onclick="goToSlide(18)"></span>
-      <span class="cdot" onclick="goToSlide(19)"></span>
-      <span class="cdot" onclick="goToSlide(20)"></span>
-      <span class="cdot" onclick="goToSlide(21)"></span>
-    </div>
   </div>
+
+  <!-- Dots agrupados por edición -->
+  <div class="carousel-dots">
+    <span class="cdot-label">Bienvenida</span>
+    <span class="cdot active" onclick="goToSlide(0)"></span>
+    <span class="cdot" onclick="goToSlide(1)"></span>
+    <span class="cdot" onclick="goToSlide(2)"></span>
+    <span class="cdot" onclick="goToSlide(3)"></span>
+    <span class="cdot" onclick="goToSlide(4)"></span>
+    <span class="cdot" onclick="goToSlide(5)"></span>
+    <span class="cdot-sep">|</span>
+    <span class="cdot-label">Oncología</span>
+    <span class="cdot" onclick="goToSlide(6)"></span>
+    <span class="cdot" onclick="goToSlide(7)"></span>
+    <span class="cdot" onclick="goToSlide(8)"></span>
+    <span class="cdot" onclick="goToSlide(9)"></span>
+    <span class="cdot-sep">|</span>
+    <span class="cdot-label">Epidemiología</span>
+    <span class="cdot" onclick="goToSlide(10)"></span>
+    <span class="cdot" onclick="goToSlide(11)"></span>
+    <span class="cdot" onclick="goToSlide(12)"></span>
+    <span class="cdot-sep">|</span>
+    <span class="cdot-label">Biotecnología</span>
+    <span class="cdot" onclick="goToSlide(13)"></span>
+    <span class="cdot" onclick="goToSlide(14)"></span>
+    <span class="cdot" onclick="goToSlide(15)"></span>
+          <span class="cdot-sep">|</span>
+    <span class="cdot-label">Cierre</span>
+    <span class="cdot" onclick="goToSlide(16)"></span>
+    <span class="cdot" onclick="goToSlide(17)"></span>
+    <span class="cdot" onclick="goToSlide(18)"></span>
+    <span class="cdot" onclick="goToSlide(19)"></span>
+    <span class="cdot" onclick="goToSlide(20)"></span>
+    <span class="cdot" onclick="goToSlide(21)"></span>
+  </div>
+
 
   <!-- COLLAGE -->
   <div class="collage-wrap">
